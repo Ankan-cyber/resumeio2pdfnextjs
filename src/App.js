@@ -55,7 +55,7 @@ function App() {
 
         // Download the images and wait for all promises to resolve
         for (let i = 1; i <= pages; i++) {
-          images.push(`https://ssr.resume.tools/to-image/ssid-${sid}-${i}.png?size=2000`)
+          images.push(`https://ssr.resume.tools/to-image/ssid-${sid}-${i}.jpeg?size=2000`)
         }
 
         // Combine the images into a PDF ans send them to client
@@ -63,7 +63,7 @@ function App() {
         const width = pdf.internal.pageSize.getWidth();
         const height = pdf.internal.pageSize.getHeight();
         for (let i = 0; i < pages; i++) {
-          pdf.addImage(images[i], 'PNG', 0, 0, width, height);
+          pdf.addImage(images[i], 'JPEG', 0, 0, width, height);
           if (i < pages - 1) {
             pdf.addPage()
           }
