@@ -11,3 +11,46 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 70vh;
+}
+
+#box {
+  text-align: center;
+  width: 50%;
+  padding: 20px;
+  background-color: lightgray;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+input[type="text"] {
+  height: 40px;
+  font-size: 20px;
+  width: 90%;
+}
+
+@media (max-width: 720px) {
+  #box {
+    width: 75%;
+  }
+
+  input[type="text"] {
+    width: 75%;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  #box {
+    width: auto;
+  }
+
+  input[type="text"] {
+    width: 90%;
+  }
+}
