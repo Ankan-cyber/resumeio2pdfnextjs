@@ -1,6 +1,6 @@
 {
   "name": "resumeio2pdfnextjs",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,6 +12,7 @@
     "@types/node": "20.1.3",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
+    "crypto": "^1.0.1",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
     "image-to-pdf": "^2.0.0",
@@ -22,9 +23,5 @@
     "react-toastify": "^9.1.2",
     "request": "^2.88.2",
     "typescript": "5.0.4"
-  },
-  "devDependencies": {
-    "@types/node-fetch": "^2.6.3",
-    "@types/request": "^2.48.8"
   }
 }

@@ -2,37 +2,56 @@
 import imgToPDF from 'image-to-pdf';
 import request from 'request';
 import fetch from 'node-fetch';
-import fs from 'fs'
-import path from 'path'
 
-path.join(process.cwd(), 'images');
-path.join(process.cwd(), 'pdfs');
+function encodePdfBuffer(pdfBuffer) {
+  var CHUNK_SIZE = 0x8000; // 32kb
+  var index = 0;
+  var result = '';
+  var length = pdfBuffer.length;
 
-const downloadImage = (url, fileName) => {
+  while (index < length) {
+    var chunk = pdfBuffer.subarray(index, Math.min(index + CHUNK_SIZE, length));
+    result += String.fromCharCode.apply(null, chunk);
+    index += CHUNK_SIZE;
+  }
+
+  return btoa(result);
+}
+
+const downloadImage = (url) => {
   return new Promise((resolve, reject) => {
     request.get(url.toString())
       .on("error", (err) => {
         reject(err);
       })
-      .pipe(fs.createWriteStream(fileName))
-      .on("close", () => {
-        resolve();
+      .on("response", (response) => {
+        const chunks = [];
+        response.on("data", (chunk) => {
+          chunks.push(chunk);
+        });
+        response.on("end", () => {
+          const imageData = Buffer.concat(chunks);
+          resolve(imageData);
+        });
       });
   });
-};
+}
 
-const makePDF = (images, sid) => {
+const makePDF = (images) => {
   return new Promise((resolve, reject) => {
     try {
+      const pdfChunks = [];
       imgToPDF(images, imgToPDF.sizes.A4)
-        .pipe(fs.createWriteStream(`./public/pdfs/${sid}.pdf`))
-      resolve();
+        .on('data', (chunk) => pdfChunks.push(chunk))
+        .on('end', () => {
+          const pdfData = Buffer.concat(pdfChunks);
+          resolve(pdfData);
+        });
+    } catch (err) {
+      reject(err);
     }
-    catch (err) {
-      reject(err)
-    }
-  })
-}
+  });
+};
 
 export default async function handler(req, res) {
   if (req.method == "POST") {
@@ -54,39 +73,30 @@ export default async function handler(req, res) {
             'Content-Type': 'application/json'
           },
         });
-        const json = await response.json();
-        let pages = json.pages.length;
-        let images = [];
-        // Download the images and wait for all promises to resolve
-        const downloadPromises = [];
-        for (let i = 1; i <= pages; i++) {
-          const fileName = `./images/${sid}-${i}.png`;
-          const url = `https://ssr.resume.tools/to-image/ssid-${sid}-${i}.png?size=2000`;
-          downloadPromises.push(downloadImage(url, fileName));
-          images.push(fileName);
-        }
-        await Promise.all(downloadPromises);
+        if (response.ok) {
+          const json = await response.json();
+          let pages = json.pages.length;
+          let imageBuffers = [];
+          // Download the images and wait for all promises to resolve
+          const downloadPromises = [];
+          for (let i = 1; i <= pages; i++) {
+            const url = `https://ssr.resume.tools/to-image/ssid-${sid}-${i}.png?size=2000`;
+            downloadPromises.push(downloadImage(url));
+          }
+          imageBuffers = await Promise.all(downloadPromises);
 
-        // Combine the images into a PDF and delete the images afterwards
+          // Combine the images into a PDF and delete the images afterwards
+          const pdfBuffer = await makePDF(imageBuffers);
 
-        makePDF(images, sid).then(() => {
-          images.forEach(imagePath => {
-            fs.unlink(imagePath, (err) => {
-              if (err) {
-                console.error(err);
-              } else {
-                console.log(`Deleted ${imagePath}`);
-              }
-            });
+          res.writeHead(200, {
+            'Content-Type': 'application/pdf',
+            'Content-Disposition': 'attachment; filename="resume.pdf"'
           });
-          success = true;
-          res.status(200).json({ success: true, msg: 'PDF successfully generated ... You are now being redirected', sid });
-
-        }).catch((err) => {
-          console.log(err)
-          res.status(400).json({ success, "msg": "Some error occured" })
-        })
-
+          res.end(pdfBuffer, 'binary');
+        }
+        else {
+          res.status(400).json({ success, "msg": "This url doesn't exist" })
+        }
       }
       catch (err) {
         console.log(err)
