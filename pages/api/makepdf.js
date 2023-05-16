@@ -3,21 +3,6 @@ import imgToPDF from 'image-to-pdf';
 import request from 'request';
 import fetch from 'node-fetch';
 
-function encodePdfBuffer(pdfBuffer) {
-  var CHUNK_SIZE = 0x8000; // 32kb
-  var index = 0;
-  var result = '';
-  var length = pdfBuffer.length;
-
-  while (index < length) {
-    var chunk = pdfBuffer.subarray(index, Math.min(index + CHUNK_SIZE, length));
-    result += String.fromCharCode.apply(null, chunk);
-    index += CHUNK_SIZE;
-  }
-
-  return btoa(result);
-}
-
 const downloadImage = (url) => {
   return new Promise((resolve, reject) => {
     request.get(url.toString())
