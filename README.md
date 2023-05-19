@@ -18,7 +18,7 @@ A web application that allows users to download their [Resume.io](https://resume
 1. Clone this repository
 
 ```
-git clone https://github.com/Ankan-cyber/resumeio2pdfreact
+git clone https://github.com/Ankan-cyber/resumeio2pdfnextjs
 ```
 
 2. Install dependencies
