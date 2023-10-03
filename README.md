@@ -37,6 +37,8 @@ npm run dev
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Ankan-cyber/resumeio2pdfnextjs?quickstart=1)
  
+[The Original Inspiration](https://github.com/sopov/resumeio2pdf)
+
 ## Contributions
 
 We welcome contributions to this project. If you have an idea or have found a bug, please open an issue to discuss it. If you'd like to contribute, please fork the repository and create a pull request with your changes.
