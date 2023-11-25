@@ -69,7 +69,7 @@ export default function Home() {
       <GithubButton repo="Ankan-cyber/resumeio2pdfnextjs" />
       <h1 style={{ textAlign: "center" }}>Download Resume.io resume in pdf for FREE</h1>
       <div id="container">
-        <div id="box">
+        <form id="box" onSubmit={downloadResume}>
           <h1>Resume Downloader</h1>
           <input
             type="text"
@@ -91,11 +91,11 @@ export default function Home() {
               borderRadius: "10px"
             }}
             id="btn"
-            onClick={downloadResume}
+            type='submit'
           >
             Generate PDF
           </button>
-        </div>
+        </form>
       </div>
     </>
   )

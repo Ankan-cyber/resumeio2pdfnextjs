@@ -39,7 +39,8 @@ const makePDF = (images) => {
 };
 
 export default async function handler(req, res) {
-  if (req.method == "POST") {
+  if (req.method == "POST" && req.headers['sec-fetch-site'] == 'same-origin') {
+    
     let success = false;
     const url = JSON.parse(req.body).url;
     const reURL = /^https:\/\/resume[.]io\/r\/([\w]+)/;
@@ -85,7 +86,7 @@ export default async function handler(req, res) {
       }
       catch (err) {
         console.log(err)
-        res.status(400).json({ success, "msg": "Some error occured" })
+        res.status(400).json({ success, "msg": "Some error occurred" })
       }
     }
   }
