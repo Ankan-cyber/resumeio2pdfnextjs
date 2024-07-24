@@ -1,0 +1,44 @@
+.banner {
+  background: #009579;
+}
+
+.banner__content {
+  padding: 16px;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.banner__text {
+  flex-grow: 1;
+  line-height: 1.4;
+  font-family: "Quicksand", sans-serif;
+}
+
+.banner__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.banner__text,
+.banner__close > span {
+  color: #ffffff !important;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: 100;
+  float: right;
+  font-size: 28px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}

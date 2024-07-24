@@ -2,6 +2,7 @@ import Head from 'next/head'
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import GithubButton from './GithubButton';
+import Announcement from './Announcement'
 
 export default function Home() {
 
@@ -66,8 +67,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
         <meta name="keywords" content="resume.io, download, free, pdf " />
       </Head>
+      <Announcement />
       <GithubButton repo="Ankan-cyber/resumeio2pdfnextjs" />
       <h1 style={{ textAlign: "center" }}>Download Resume.io resume in pdf for FREE</h1>
+
       <div id="container">
         <form id="box" onSubmit={downloadResume}>
           <h1>Resume Downloader</h1>

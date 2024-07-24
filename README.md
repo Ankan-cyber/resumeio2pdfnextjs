@@ -13,6 +13,10 @@ A web application that allows users to download their [Resume.io](https://resume
 - Webapp downloads the PDF of the resume
 - Free and easy to use
 
+## Announcement
+
+Because of some recent changes in resume.io the share link can't be generated. So if you are in this situation use this repo to get the chrome extension for downloading resume [ResumeGrabber](https://github.com/ngntriminh/ResumeGrabber)
+
 ## Getting Started
 
 1. Clone this repository
