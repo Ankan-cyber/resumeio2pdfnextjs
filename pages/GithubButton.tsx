@@ -15,6 +15,9 @@ function GithubButton(props: MyComponentProps) {
             <a href={url} target="_blank" rel="noopener noreferrer">
                 <img src={`https://img.shields.io/github/watchers/${repo}?style=social`} alt="GitHub stars" width="100px" height="auto" />
             </a>
+            <a href="https://buymeacoffee.com/ankanroy2" target="_blank" rel="noopener noreferrer">
+                <img src={`/buymeacoffee.svg`} alt="Buy me a coffee" width="100px" height="auto" />
+            </a>
         </div>
     );
 }
